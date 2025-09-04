@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>ATR Stop Loss & Target Calculator</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f4f6f8;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+    .container {
+      background: #fff;
+      padding: 20px 30px;
+      border-radius: 12px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      width: 350px;
+      text-align: center;
+    }
+    h2 {
+      margin-bottom: 20px;
+      color: #333;
+    }
+    input {
+      width: 90%;
+      padding: 8px;
+      margin: 10px 0;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+    }
+    button {
+      background: #007bff;
+      color: #fff;
+      border: none;
+      padding: 10px 15px;
+      margin-top: 10px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 16px;
+    }
+    button:hover {
+      background: #0056b3;
+    }
+    .result {
+      margin-top: 20px;
+      font-size: 18px;
+      color: #222;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>ATR Stop Loss & Target</h2>
+    <input type="number" id="entry" placeholder="Entry Price (₹)" step="0.01">
+    <input type="number" id="atr" placeholder="ATR Value (₹)" step="0.01">
+    <button onclick="calculate()">Calculate</button>
+    <div class="result" id="output"></div>
+  </div>
+
+  <script>
+    function calculate() {
+      let entry = parseFloat(document.getElementById("entry").value);
+      let atr = parseFloat(document.getElementById("atr").value);
+
+      if (isNaN(entry) || isNaN(atr)) {
+        document.getElementById("output").innerHTML = "⚠️ Please enter valid numbers.";
+        return;
+      }
+
+      let multiplier = 2;   // Fixed
+      let rrr = 2;          // Fixed (1:2)
+
+      let risk = atr * multiplier;
+      let stopLoss = entry - risk;
+      let target = entry + (risk * rrr);
+
+      document.getElementById("output").innerHTML = `
+        📉 Stop Loss: <b>₹${stopLoss.toFixed(2)}</b><br>
+        🎯 Target: <b>₹${target.toFixed(2)}</b>
+      `;
+    }
+  </script>
+</body>
+</html>
